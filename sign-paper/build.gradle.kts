@@ -3,20 +3,24 @@ plugins {
 }
 
 dependencies {
-    api(project(":sign-shared"))
+    api(project(":sign-shared")) {
+        exclude(group = "org.jetbrains.kotlin")
+        exclude(group = "org.jetbrains.kotlinx")
+    }
     compileOnly(rootProject.libs.paper.api)
-    implementation(rootProject.libs.bundles.cloud.paper)
-    implementation(rootProject.libs.bundles.coroutine)
+    implementation(rootProject.libs.bundles.cloud.paper) {
+        exclude(group = "org.jetbrains.kotlin")
+        exclude(group = "org.jetbrains.kotlinx")
+    }
+    compileOnly(rootProject.libs.bundles.coroutine)
+    compileOnly(rootProject.libs.simplecloud.controller.api)
 }
 
 tasks {
     shadowJar {
-        relocate("io.grpc", "app.simplecloud.relocate.grpc")
-        relocate("app.simplecloud.controller", "app.simplecloud.relocate.controller")
-        relocate("app.simplecloud.pubsub", "app.simplecloud.relocate.pubsub")
-        relocate("app.simplecloud.droplet", "app.simplecloud.relocate.droplet")
-        relocate("build.buf.gen", "app.simplecloud.relocate.buf")
-        relocate("com.google.protobuf", "app.simplecloud.relocate.protobuf")
+        exclude("kotlin")
+        exclude("kotlinx")
+        mergeServiceFiles()
     }
 }
 
