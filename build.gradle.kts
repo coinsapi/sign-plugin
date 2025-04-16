@@ -32,7 +32,7 @@ subprojects {
 
     dependencies {
         testImplementation(rootProject.libs.kotlin.test)
-        implementation(rootProject.libs.kotlin.jvm)
+        compileOnly(rootProject.libs.kotlin.jvm)
     }
 
     kotlin {
